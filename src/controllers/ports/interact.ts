@@ -1,17 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { resolvePort } from "../../services/ports/resolve";
 import SerialPort from "serialport";
-
-enum InteractMode {
-  RECV = "recv",
-  SEND = "send",
-}
-
-enum WSCustomCloseCode {
-  PARAM_INVALID = 4000,
-  PARAM_NOT_EXIST,
-  FAILED_TO_OPEN,
-}
+import { WSCustomCloseCode, InteractMode } from "../types/InteractType";
 
 interface IParams {
   path: string;
