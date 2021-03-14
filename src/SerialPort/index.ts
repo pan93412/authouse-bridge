@@ -1,7 +1,4 @@
-import serialport from 'serialport';
+import SerialPort from "./SerialPort";
+import SerialPortPool from "./SerialPortPool";
 
-export class SerialPort {
-    static async list() {
-        return serialport.list();
-    }
-}
+export { SerialPort, SerialPortPool };
