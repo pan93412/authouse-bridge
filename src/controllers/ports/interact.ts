@@ -44,8 +44,6 @@ export default function PostsWrite(fastify: FastifyInstance): void {
       parser.on("data", (data: Buffer | string) => {
         const dataString = data.toString();
 
-        if (dataString === "!end!") connection.socket.close();
-
         connection.socket.send(JSON.stringify({
           type: InteractMode.RECV,
           data: dataString,
