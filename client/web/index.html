@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-2">Authouse Bridge 測試</h1>
+            <h1 class="subtitle is-4">a.k.a. Authouse Online (prototype)</h2>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h2 class="title is-3">Authouse Light</h2>
+                    <div class="authouse-light"><b>目前狀態：</b><span id="authouse-light-status" data-enabled="-1"></span></div>
+                    <br/>
+                    <div class="field is-grouped">
+                        <div class="control"><button class="button is-success" onclick="client.send('e')">啟用</button></div>
+                        <div class="control"><button class="button is-danger" onclick="client.send('d')">停用</button></div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="column">
+                        <h2 class="title is-3">溫濕度</h2>
+                        <div class="esp32"><b>溫度：</b><span id="esp32-temp"></span>℃</div>
+                        <div class="esp32"><b>濕度：</b><span id="esp32-humi"></span>%</div>
+                        <br/>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button" onclick="client.send('t')">取得資料</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #authouse-light-status::before {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin: 2px 4px;
+            border-radius: 100%;
+            content: "";
+        }
+
+        #authouse-light-status[data-enabled="-1"]::before {
+            background-color: rgb(194, 194, 126);
+        }
+
+        #authouse-light-status[data-enabled="-1"]::after {
+            content: "等待操作";
+        }
+
+        #authouse-light-status[data-enabled="0"]::before {
+            background-color: red;
+        }
+
+        #authouse-light-status[data-enabled="0"]::after {
+            content: "已停用";
+        }
+
+        #authouse-light-status[data-enabled="1"]::before {
+            background-color: green;
+        }
+
+        #authouse-light-status[data-enabled="1"]::after {
+            content: "已啟用";
+        }
+    </style>
+    <script>
+        const lightStatus = document.getElementById("authouse-light-status");
+        const esp32Temp = document.getElementById("esp32-temp");
+        const esp32Humi = document.getElementById("esp32-humi");
+        const client = new WebSocket("ws://localhost:3000/ports/364311542bb4638116b9093f5526765ba07cb33e");
+        client.addEventListener("open", function () {
+            client.send("d");
+        });
+        client.addEventListener("message", function (event) {
+            const datapkg = JSON.parse(event.data.toString());
+            const data = JSON.parse(datapkg.data || "{}");
+
+            if (data.light_enabled !== undefined) {
+                if (data.light_enabled) lightStatus.dataset.enabled = "1";
+                else lightStatus.dataset.enabled = "0";
+            } else if (data.temperature && data.humidity) {
+                esp32Temp.innerText = data.temperature;
+                esp32Humi.innerText = data.humidity;
+            } else {
+
+            }
+        });
+    </script>
+</body>
+</html>
