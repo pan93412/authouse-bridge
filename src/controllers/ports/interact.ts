@@ -1,5 +1,4 @@
 import type { FastifyInstance } from "fastify";
-import { writeToPort } from "../../services/ports/write";
 import { resolvePort } from "../../services/ports/resolve";
 import SerialPort from "serialport";
 
