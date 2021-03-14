@@ -53,6 +53,10 @@ export default function PostsWrite(fastify: FastifyInstance): void {
       connection.socket.on("close", () => {
         serialPort.close();
       });
+
+      serialPort.on("close", () => {
+        connection.socket.close();
+      });
     } else {
       connection.socket.close(WSCustomCloseCode.PARAM_INVALID);
     }
