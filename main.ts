@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import fastifyWebsocket from "fastify-websocket";
 import controllers from "./src/controllers";
 
 const fastify = Fastify({
@@ -6,6 +7,8 @@ const fastify = Fastify({
     level: "trace",
   },
 });
+
+fastify.register(fastifyWebsocket);
 
 // Declare a route
 controllers.forEach((c) => c(fastify, {}));

@@ -3,20 +3,23 @@
     "@serialport/parser-readline": "^9.0.7",
     "fast-json-stringify": "^2.4.2",
     "fastify": "^3.12.0",
+    "fastify-websocket": "^3.1.0",
     "pino": "^6.11.1",
     "pino-pretty": "^4.5.0",
     "serialport": "^9.0.7",
     "sha1": "^1.1.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.2"
+    "typescript": "^4.2.2",
+    "ws": "^7.4.4"
   },
   "scripts": {
     "start": "ts-node main.ts"
   },
   "devDependencies": {
-    "@types/node": "^14.14.31",
+    "@types/node": "^14.14.34",
     "@types/pino": "^6.3.6",
     "@types/serialport": "^8.0.1",
-    "@types/sha1": "^1.1.2"
+    "@types/sha1": "^1.1.2",
+    "@types/ws": "^7.4.0"
   }
 }
