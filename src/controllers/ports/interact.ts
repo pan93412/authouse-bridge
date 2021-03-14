@@ -12,6 +12,7 @@ function isIParams(val: unknown): val is IParams {
   return typeof v.path === "string";
 }
 
+// TODO: 多人登入或是還沒完全關閉的情況可能會掛掉。需要做個 Pool。
 export default function PostsWrite(fastify: FastifyInstance): void {
   fastify.get("/ports/:path", { websocket: true }, async function (connection, request) {
     if (isIParams(request.params)) {
