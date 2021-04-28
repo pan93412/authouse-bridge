@@ -81,7 +81,7 @@
         const lightStatus = document.getElementById("authouse-light-status");
         const esp32Temp = document.getElementById("esp32-temp");
         const esp32Humi = document.getElementById("esp32-humi");
-        const client = new WebSocket("ws://localhost:3000/ports/364311542bb4638116b9093f5526765ba07cb33e");
+        const client = new WebSocket("ws://localhost:3000/ports/386cfdc39026cd72c3e352339b340ba80b25a23b");
         client.addEventListener("open", function () {
             client.send("d");
         });
